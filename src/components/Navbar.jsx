@@ -24,11 +24,11 @@ const Navbar = () => {
         }
       >
         <ul className="flex flex-col items-center justify-center w-full h-full">
-          <li>Home</li>
-          <li>Destinations</li>
-          <li>Reservations</li>
-          <li>Amenities</li>
-          <li>Rooms</li>
+          <li className="text-3xl font-bold p-8">Home</li>
+          <li className="text-3xl font-bold p-8">Destinations</li>
+          <li className="text-3xl font-bold p-8">Reservations</li>
+          <li className="text-3xl font-bold p-8">Amenities</li>
+          <li className="text-3xl font-bold p-8">Rooms</li>
         </ul>
       </div>
     </div>
