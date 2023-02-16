@@ -18,7 +18,7 @@ const Hero = () => {
           <h1 className="max-w-[600px] drop-shadow-2xl py-2 text-xl">
             Private Beaches & Getaways
           </h1>
-          <p>
+          <p className="mb-4">
             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quidem
             provident aperiam minus facere saepe quod, dolorem dolores natus
             incidunt dolore!
