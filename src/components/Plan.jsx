@@ -47,14 +47,14 @@ const Plan = () => {
           iste numquam aliquam quod atque porro laudantium consequatur provident
           mollitia inventore.
         </p>
-        <div>
+        {/* <div>
           <button className="border-black mr-4 hover:shadow-xl">
             Learn More
           </button>
           <button className="border-black bg-black text-white hover:shadow-xl">
             Book Your Trip
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );

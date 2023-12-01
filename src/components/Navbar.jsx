@@ -11,11 +11,11 @@ const Navbar = () => {
   return (
     <div className="w-full  absolute flex justify-between items-center p-4">
       <h1 className="text-white font-bold text-2xl z-20">Experiences</h1>
-      <HiMenuAlt3
+      {/* <HiMenuAlt3
         onClick={navClickHandler}
         size={25}
         className="z-20 text-white cursor-pointer"
-      />
+      /> */}
       <div
         className={
           nav

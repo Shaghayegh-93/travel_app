@@ -23,7 +23,7 @@ const Hero = () => {
             provident aperiam minus facere saepe quod, dolorem dolores natus
             incidunt dolore!
           </p>
-          <button className="bg-white text-black">Reserve Now</button>
+          {/* <button className="bg-white text-black">Reserve Now</button> */}
         </div>
       </div>
     </div>
