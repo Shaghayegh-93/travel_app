@@ -14,7 +14,6 @@ const Slider = () => {
     { src: slide3, title: "Pasta", id: Date.now() },
     { src: slide4, title: "Salmon", id: Date.now() },
   ];
-  console.log(slides.length);
   const [currentIndex, setCurrentIndex] = useState(0);
   const prevSlide = () => {
     const isFirstSlide = currentIndex === 0;
