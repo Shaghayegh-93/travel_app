@@ -27,7 +27,7 @@ const Services = () => {
         />
         <SingleService
           serviceIcon={<BiSolidBeer />}
-          serviceTitle="Best Beeer"
+          serviceTitle="Best Beer"
           serviceDescription="excepteur cillum proident in occaecat ea ut in Lorem minim consectetur officia incididunt aliquip ex ea sunt sit velit mollit eiusmod "
         />
       </div>
