@@ -6,22 +6,27 @@ import Slider from "../components/Slider";
 import Layout from "../components/Layout";
 import { Link, NavLink } from "react-router-dom";
 import Banner from "../components/Banner";
+import Services from "../components/Services";
+import FeaturedRooms from "../components/FeaturedRooms";
+import heroImage from "../assets/images/defaultBcg.jpeg";
+
 
 const HomePage = () => {
   return (
     <div className="App">
       <Layout>
-        <Hero>
+        <Hero backgroundImage={heroImage}>
           <Banner
             title="Luxurious Rooms"
             subtitle=" Delux Rooms Starting At $299"
           >
-            <button className="py-2 font-medium border-2 hover:bg-black hover:text-white transition ease-in ">
+            <button className="py-2 font-medium border-2 hover:bg-black hover:text-white transition ease-in duration-300 ">
               <Link to="/rooms">OUR ROOMS</Link>
             </button>
           </Banner>
         </Hero>
-        <Offers />
+        <Services />
+        <FeaturedRooms />
         <Plan />
         <Slider />
       </Layout>
