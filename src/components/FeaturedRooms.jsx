@@ -1,13 +1,14 @@
 import React from "react";
-import SingleRoom from "./singleRoom";
+import SingleRoom from "./Room";
 import Titles from "./Titles";
 import { useRoomList } from "../context/RoomListProvider";
 import Loading from "./Loading";
+import Room from "./Room";
 const FeaturedRooms = () => {
   const { roomList, featuredRoomList, isLoading } = useRoomList();
 
 const rooms= featuredRoomList?.map((item) => {
-            return <SingleRoom item={item} key={item.id} />;
+            return <Room item={item} key={item.id} />;
           })
   return (
     <div className="flex flex-col">
