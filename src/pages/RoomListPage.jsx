@@ -6,7 +6,7 @@ import Layout from "../components/Layout";
 import { useRoomList } from "../context/RoomListProvider";
 import heroImage from "../assets/images/room-1.jpeg";
 import Filters from "../components/Filters";
-import SingleRoom from "../components/singleRoom";
+import SingleRoom from "./components/SingleRoom";
 
 const RoomListPage = () => {
   const { roomList, sortedRoomList } = useRoomList();
