@@ -1,23 +1,26 @@
 import "./App.css";
-import Footer from "./components/Footer";
-import Hero from "./components/Hero";
-import Navbar from "./components/Navbar";
-import Offers from "./components/Offers";
-import Plan from "./components/Plan";
-import Rooms from "./components/Rooms";
-import Slider from "./components/Slider";
+
+import { Route, Routes } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+// import RoomsInfo from "./components/RoomsInfo";
+// import Rooms from "./components/Rooms";
+import RoomListPage from "./pages/RoomListPage";
+import SingleRoomPage from "./pages/SingleRoomPage";
+import NotFoundPage from "./pages/NotFoundPage";
+import RoomListProvider from "./context/RoomListProvider";
 
 function App() {
   return (
-    <div className="App">
-      <Navbar />
-      <Hero />
-      {/* <Offers />   */}
-      <Plan />
-      <Rooms />
-      <Slider />
-      <Footer />
-    </div>
+    <RoomListProvider>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="rooms" element={<RoomListPage />} />
+          <Route path="rooms/:slug" element={<SingleRoomPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </div>
+    </RoomListProvider>
   );
 }
 
