@@ -1,32 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import hero from "../assets/images/hero.jpeg";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { addDays, compareAsc, format } from "date-fns";
+import { Link, NavLink, useLocation } from "react-router-dom";
 
-const Hero = () => {
+const Hero = ({ backgroundImage, children }) => {
+  // const location = useLocation();
+  // const defaultBackground = location.pathname === "/";
+  // const roomBackground = location.pathname === "/rooms";
+  // const singleRoomBackground = location.pathname === "/rooms/:slug";
+
   return (
-    <div className="w-full h-screen ">
-      <img
-        alt="heroImage"
-        src={hero}
-        className="w-full h-screen object-cover top-0  left-0 "
-      />
-      <div className="bg-black/30 w-full h-screen absolute top-0 left-0" />
-      <div className="w-full h-full absolute text-white flex flex-col justify-center top-0">
-        <div className="md:left-[10%] max-w-[1100px]  m-auto p-4">
-          <p className="font-bold text-5xl md:text-7xl drop-shadow-2xl">
-            All Inclusive
-          </p>
-          <h1 className="max-w-[600px] drop-shadow-2xl py-2 text-xl">
-            Private Beaches & Getaways
-          </h1>
-          <p className="mb-4">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quidem
-            provident aperiam minus facere saepe quod, dolorem dolores natus
-            incidunt dolore!
-          </p>
-          {/* <button className="bg-white text-black">Reserve Now</button> */}
-        </div>
-      </div>
-    </div>
+    <header
+      className="bg-no-repeat min-h-[calc(100vh-80px)] bg-center bg-cover flex items-center justify-center "
+      style={{
+        backgroundImage: `url(${backgroundImage})`,
+      }}
+    >
+      {children}
+    </header>
   );
 };
 
