@@ -1,14 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import defaultImage from "../assets/images/room-1.jpeg"
+import defaultImage from "../assets/images/room-1.jpeg";
 // import { useParams } from "react-router-dom";
 
-
 const SingleRoom = ({ item }) => {
-//   const { slug } = useParams();
-//   console.log("slug",slug)
+  //   const { slug } = useParams();
+  //   console.log("slug",slug)
 
-//   console.log("slug",item.fields.slug);
+  //   console.log("slug",item.fields.slug);
   return (
     <div className="relative ">
       <div className="relative group">
@@ -20,7 +19,7 @@ const SingleRoom = ({ item }) => {
         </span>
 
         <img
-          src={item?.images[0]|| defaultImage}
+          src={item?.images[0] || defaultImage}
           alt=""
           className="w-full h-full"
         />

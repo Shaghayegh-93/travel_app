@@ -4,9 +4,9 @@ import Banner from "../components/Banner";
 import { Link } from "react-router-dom";
 import Layout from "../components/Layout";
 import { useRoomList } from "../context/RoomListProvider";
-import SingleRoom from "../components/singleRoom";
 import heroImage from "../assets/images/room-1.jpeg";
 import Filters from "../components/Filters";
+import SingleRoom from "../components/singleRoom";
 
 const RoomListPage = () => {
   const { roomList, sortedRoomList } = useRoomList();
