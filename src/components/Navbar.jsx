@@ -34,7 +34,7 @@ const Navbar = () => {
             <li className="text-lg font-medium cursor-pointer relative ">
               <Link
                 className="transition-all ease-in-out duration-300 after:content-[''] after:w-full after:h-[2px]  after:bg-white after:absolute after:left-0 after:bottom-[-8px] after:opacity-0 hover:after:opacity-100 "
-                to="#"
+                to="/"
               >
                 Home
               </Link>
