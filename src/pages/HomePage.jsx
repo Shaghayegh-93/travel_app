@@ -1,6 +1,5 @@
 import React from "react";
 import Hero from "../components/Hero";
-import Offers from "../components/Offers";
 import Plan from "../components/Plan";
 import Slider from "../components/Slider";
 import Layout from "../components/Layout";
@@ -9,7 +8,6 @@ import Banner from "../components/Banner";
 import Services from "../components/Services";
 import FeaturedRooms from "../components/FeaturedRooms";
 import heroImage from "../assets/images/defaultBcg.jpeg";
-
 
 const HomePage = () => {
   return (
