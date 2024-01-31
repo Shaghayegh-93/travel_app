@@ -8,19 +8,24 @@ import RoomListPage from "./pages/RoomListPage";
 import SingleRoomPage from "./pages/SingleRoomPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import RoomListProvider from "./context/RoomListProvider";
+import ReservationPage from "./pages/ReservationPage";
+import UserListProvider from "./context/UserListProvider";
 
 function App() {
   return (
-    <RoomListProvider>
-      <div className="App">
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="rooms" element={<RoomListPage />} />
-          <Route path="rooms/:slug" element={<SingleRoomPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </div>
-    </RoomListProvider>
+    <UserListProvider>
+      <RoomListProvider>
+        <div className="App">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="rooms" element={<RoomListPage />} />
+            <Route path="rooms/:slug" element={<SingleRoomPage />} />
+            <Route path="reservation" element={<ReservationPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </div>
+      </RoomListProvider>
+    </UserListProvider>
   );
 }
 
