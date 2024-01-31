@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useRoomList } from "../context/RoomListProvider";
 import Titles from "./Titles";
+import { Link } from "react-router-dom";
 
 const Filters = () => {
   const {
@@ -32,11 +33,10 @@ const Filters = () => {
   console.log(maxPrice);
 
   useEffect(() => {
-  
     filterdRoomList();
-  }, [type, capacity,maxPrice]); 
+  }, [type, capacity, maxPrice]);
 
-  console.log("priceeeeeeeeeeeee",price);
+  console.log("priceeeeeeeeeeeee", price);
   return (
     <div className="flex flex-col ">
       <Titles title="Search Rooms" />
@@ -49,6 +49,7 @@ const Filters = () => {
             value={type}
             onChange={filterChangedHandler}
             className="border"
+            required
           >
             {typeOptions}
           </select>
@@ -61,6 +62,7 @@ const Filters = () => {
             value={capacity}
             onChange={filterChangedHandler}
             className="border"
+            required
           >
             {capacityOptions}
           </select>
@@ -75,9 +77,13 @@ const Filters = () => {
             onChange={filterChangedHandler}
             className="border"
             min={minPrice}
-            max={maxPrice||1000}
+            max={maxPrice || 1000}
+            required
           />
         </div>
+        <button>
+          <Link to="/reservation">Book</Link>
+        </button>
       </form>
     </div>
   );
