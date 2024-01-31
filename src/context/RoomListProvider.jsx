@@ -55,8 +55,8 @@ function roomListReducer(state, action) {
     case "filterdRoomList/loaded":
       return {
         ...state,
-
         sortedRoomList: action.payload,
+        
       };
     case "maxPrice/loaded":
       return {
@@ -162,7 +162,7 @@ const RoomListProvider = ({ children }) => {
     const value = e.type === "checkbox" ? target.checked : target.value;
 
     dispatch({ type: "filterdRoom/loaded", payload: { value, name } });
-    filterdRoomList(); // Using setTimeout to run it in the next tick
+    filterdRoomList(); 
   };
   const filterdRoomList = () => {
     let tempRooms = [...roomList];
@@ -176,6 +176,7 @@ const RoomListProvider = ({ children }) => {
     if (price !== 0) {
       tempRooms = tempRooms.filter((room) => room.price <= Number(price));
     }
+    console.log("sorteddddd", tempRooms);
 
     dispatch({ type: "filterdRoomList/loaded", payload: tempRooms });
   };
@@ -188,8 +189,6 @@ const RoomListProvider = ({ children }) => {
         featuredRoomList,
         room,
         getSingleRoom,
-        maxPrice,
-        maxSize,
         type,
         capacity,
         price,
