@@ -1,6 +1,7 @@
 import React from "react";
 import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 import { TiSocialPinterest } from "react-icons/ti";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -61,12 +62,20 @@ const Footer = () => {
         </div>
       </div>
       <div className="flex justify-between flex-col max-w-[1400px] px-2 py-4 mx-auto sm:flex-row text-center text-gray-500 ">
-        <p className="py-4">2022 Experiences, LLC. All rights reserved</p>
+        <p className="py-4">2024 Experiences, LLC. All rights reserved</p>
         <div className="flex justify-between sm:w-[300px] pt-4 text-2xl">
-          <FaFacebook />
-          <FaInstagram />
-          <FaTwitter />
-          <TiSocialPinterest size={30} />
+          <Link className="cursor-pointer hover:text-white" to="/">
+            <FaFacebook />
+          </Link>
+          <Link className="cursor-pointer hover:text-white" to="/">
+            <FaInstagram />
+          </Link>
+          <Link className="cursor-pointer hover:text-white" to="/">
+            <FaTwitter />
+          </Link>
+          <Link className="cursor-pointer hover:text-white" to="/">
+            <TiSocialPinterest size={30} />
+          </Link>
         </div>
       </div>
     </div>
