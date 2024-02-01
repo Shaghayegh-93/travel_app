@@ -10,17 +10,27 @@ import NotFoundPage from "./pages/NotFoundPage";
 import RoomListProvider from "./context/RoomListProvider";
 import ReservationPage from "./pages/ReservationPage";
 import UserListProvider from "./context/UserListProvider";
+import  { Toaster } from "react-hot-toast";
+import Rooms from "./components/Rooms";
+import GallerPage from "./pages/GallerPage";
+
 
 function App() {
   return (
     <UserListProvider>
       <RoomListProvider>
+        <Toaster />
+
         <div className="App">
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="rooms" element={<RoomListPage />} />
             <Route path="rooms/:slug" element={<SingleRoomPage />} />
-            <Route path="reservation" element={<ReservationPage />} />
+            <Route
+              path="rooms/:slug/reservation"
+              element={<ReservationPage />}
+            />
+            <Route path="gallery" element={<GallerPage/>}/>
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </div>
