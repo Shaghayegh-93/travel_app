@@ -20,7 +20,7 @@ const RoomListPage = () => {
         <Hero backgroundImage={heroImage}>
           <Banner title="OUR ROOMS">
             <button className="py-2 font-medium border-2 hover:bg-black hover:text-white transition ease-in ">
-              <Link to="/">RETURN HOME</Link>
+              <Link to="/"> HOME</Link>
             </button>
           </Banner>
         </Hero>
