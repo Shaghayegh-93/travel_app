@@ -6,6 +6,7 @@ import slide4 from "../assets/images/slide4.avif";
 import { BsChevronCompactLeft } from "react-icons/bs";
 import { BsChevronCompactRight } from "react-icons/bs";
 import { RxDotFilled } from "react-icons/rx";
+import Titles from "./Titles";
 
 const Slider = () => {
   const slides = [
@@ -29,32 +30,36 @@ const Slider = () => {
     setCurrentIndex(id);
   };
   return (
-    <div className="max-w-[1400px] h-[580px] relative w-full py-16 m-auto px-4 group">
-      <div
-        className="w-full h-full rounded-2xl bg-center bg-cover duration-500"
-        style={{ backgroundImage: `url(${slides[currentIndex].src})` }}
-      ></div>
-      {/* Left Arrow */}
-      <div className="absolute top-[50%] text-white cursor-pointer left-5 text-2xl rounded-full p-2 translate-y-[-50%] group-hover:bg-black/20">
-        <BsChevronCompactLeft size={30} onClick={prevSlide} />
-      </div>
-      {/* Right Arrow */}
-      <div
-        onClick={nextSlide}
-        className="absolute top-[50%] text-white cursor-pointer right-5 text-2xl rounded-full p-2 translate-y-[-50%] group-hover:bg-black/20"
-      >
-        <BsChevronCompactRight />
-      </div>
-      <div className="flex top-4 justify-center py-2">
-        {slides.map((slide, id) => (
-          <div
-            className="cursor-pointer text-2xl "
-            key={id}
-            onClick={() => manualSlideHandler(id)}
-          >
-            <RxDotFilled />
-          </div>
-        ))}
+    <div className="flex flex-col">
+      <Titles title="Delicious Food" />
+
+      <div className="max-w-[1400px] h-[580px] relative w-full py-16 m-auto px-4 group">
+        <div
+          className="w-full h-full rounded-2xl bg-center bg-cover duration-500"
+          style={{ backgroundImage: `url(${slides[currentIndex].src})` }}
+        ></div>
+        {/* Left Arrow */}
+        <div className="absolute top-[50%] text-white cursor-pointer left-5 text-2xl rounded-full p-2 translate-y-[-50%] group-hover:bg-black/20">
+          <BsChevronCompactLeft size={30} onClick={prevSlide} />
+        </div>
+        {/* Right Arrow */}
+        <div
+          onClick={nextSlide}
+          className="absolute top-[50%] text-white cursor-pointer right-5 text-2xl rounded-full p-2 translate-y-[-50%] group-hover:bg-black/20"
+        >
+          <BsChevronCompactRight />
+        </div>
+        <div className="flex top-4 justify-center py-2">
+          {slides.map((slide, id) => (
+            <div
+              className="cursor-pointer text-2xl "
+              key={id}
+              onClick={() => manualSlideHandler(id)}
+            >
+              <RxDotFilled />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
