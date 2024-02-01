@@ -12,12 +12,9 @@ const SingleRoomPage = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
 
-  console.log("sluggg", slug);
   const { isLoading, roomList, getSingleRoom, room } = useRoomList();
-  // console.log("rooooooomname", room[0].images);
   useEffect(() => {
     getSingleRoom(slug);
-    // dispatch({ type: "roomList/loaded", payload: response.items });
   }, [slug]);
 
   if (!room) return <p>choose a room</p>;
@@ -27,13 +24,17 @@ const SingleRoomPage = () => {
         <Hero
           backgroundImage={room[0]?.images && room[0].images[0]}
 
-          // backgroundImage={defaultBackgroundImage}
-          // backgroundImage={room[0]?.images[0]}
+          
         >
           <Banner title={room[0]?.name}>
-            <button className="py-2 font-medium border-2 hover:bg-black hover:text-white transition ease-in duration-300 ">
-              <Link to="/rooms">BACK TO ROOMS</Link>
-            </button>
+            <div className="flex w-full items-center justify-center gap-2 md:gap-4">
+              <button className="py-2 font-medium border-2 hover:bg-black hover:text-white transition ease-in duration-300 w-1/2 ">
+                <Link to="/rooms">BACK TO ROOMS</Link>
+              </button>
+              <button className="py-2 font-medium border-2 hover:bg-black hover:text-white transition ease-in duration-300 w-1/2">
+                <Link to={`/rooms/${slug}/reservation`}>BOOk ROOM</Link>
+              </button>
+            </div>
           </Banner>
         </Hero>
         <div className="max-w-[1400px] flex items-center py-16 px-4 m-auto gap-10 flex-col">
