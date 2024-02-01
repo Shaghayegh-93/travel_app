@@ -30,17 +30,15 @@ const Filters = () => {
     <option value={capacity}>{capacity}</option>
   ));
 
-  console.log(maxPrice);
 
   useEffect(() => {
     filterdRoomList();
   }, [type, capacity, maxPrice]);
 
-  console.log("priceeeeeeeeeeeee", price);
   return (
     <div className="flex flex-col ">
       <Titles title="Search Rooms" />
-      <form className="max-w-[1400px] py-16 px-4 m-auto gap-4 flex">
+      <form className="max-w-[1400px] py-16 px-4 m-auto gap-2 md:gap-4 flex">
         <div className="flex flex-col">
           <label htmlFor="type"> Room Type </label>
           <select
@@ -81,9 +79,7 @@ const Filters = () => {
             required
           />
         </div>
-        <button>
-          <Link to="/reservation">Book</Link>
-        </button>
+      
       </form>
     </div>
   );
