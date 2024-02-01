@@ -3,7 +3,7 @@ import Hero from "../components/Hero";
 import Plan from "../components/Plan";
 import Slider from "../components/Slider";
 import Layout from "../components/Layout";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Banner from "../components/Banner";
 import Services from "../components/Services";
 import FeaturedRooms from "../components/FeaturedRooms";
@@ -18,8 +18,8 @@ const HomePage = () => {
             title="Luxurious Rooms"
             subtitle=" Delux Rooms Starting At $299"
           >
-            <button className="py-2 font-medium border-2 hover:bg-black hover:text-white transition ease-in duration-300 ">
-              <Link to="/rooms">OUR ROOMS</Link>
+            <button className="py-2 font-medium  border-2 hover:bg-black hover:text-white transition ease-in duration-300 ">
+              <Link to="/rooms">ROOMS</Link>
             </button>
           </Banner>
         </Hero>
