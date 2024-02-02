@@ -9,11 +9,13 @@ import { format } from "date-fns";
 import { useRoomList } from "../context/RoomListProvider";
 import defaultImage from "../assets/images/room-1.jpeg";
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const ReservationPage = () => {
   const [date, setDate] = useState([
     { startDate: new Date(), endDate: new Date(), key: "selection" },
   ]);
+
   const [userInfo, setUserInfo] = useState({
     name: "",
     lastName: "",
@@ -32,7 +34,6 @@ const ReservationPage = () => {
 
   const { dispatch } = useUserList();
   const { capacity, room } = useRoomList();
-  console.log(room[0].images[0]);
 
   const formChangeHandler = (e) => {
     setUserInfo((prevUserInfo) => ({
@@ -55,18 +56,17 @@ const ReservationPage = () => {
       !userInfo.expiryDate ||
       !userInfo.roomNumber
     ) {
-      alert("Please fill in all fields");
+      toast.error("Please fill in all fields");
       return;
     }
     if (userInfo.guest > capacity) {
-      alert("Yout guest is more than selected romm capacity");
+      toast.error("Yout guest is more than selected romm capacity");
       return;
     }
     if (userInfo.roomNumber > 10) {
-      alert("sorry ,we dont have this roo in this amount");
+      toast.error("sorry ,we dont have this roo in this amount");
       return;
     }
-    // Destructure dispatch from the context
 
     dispatch({ type: "formSubmitHandler", payload: userInfo });
     setUserInfo({
@@ -83,7 +83,9 @@ const ReservationPage = () => {
       expiryDate: "",
       cvv: "",
     });
+    toast.success("Your Room Successfully Booked.");
   };
+
   return (
     <div className="bg-gray-100 md:bg-white">
       <Layout>
@@ -92,7 +94,7 @@ const ReservationPage = () => {
           <div className="flex items-center justify-center mx-auto mt-10 relative">
             <div className="w-full h-screen hidden sm:block">
               <img
-                src={room[0]?.images[0] || defaultImage}
+                src={room?.images?.[0] || defaultImage}
                 alt=""
                 className="w-[60%] h-full rounded-md inset-0 object-cover"
               />
