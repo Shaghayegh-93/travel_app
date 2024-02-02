@@ -4,7 +4,7 @@ import defaultImage from "../assets/images/room-1.jpeg";
 
 
 const Room = ({ item }) => {
-  
+
   return (
     <div>
       <div className="relative ">
@@ -22,7 +22,7 @@ const Room = ({ item }) => {
             className="w-full h-full"
           />
 
-          <button className="border p-2 z-20 opacity-0 group-hover:opacity-100  items-center absolute top-[40%] left-[40%] bg-gray-400 transition-opacity ease-in duration-500 delay-100">
+          <button className="border p-2 z-20 opacity-0 group-hover:opacity-100  items-center absolute top-[40%] left-[35%] bg-gray-400 transition-opacity ease-in duration-500 delay-100">
             <Link to={`/rooms/${item.slug}`}>FEATURED</Link>
           </button>
         </div>
