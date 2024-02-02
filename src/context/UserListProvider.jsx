@@ -16,13 +16,7 @@ function userListReducer(state, action) {
 }
 const UserListProvider = ({ children }) => {
   const [{ userList }, dispatch] = useReducer(userListReducer, initialState);
-  console.log("userListooooooooooooooooooooo",userList);
-// const formSubmitHandler = (e) => {
-//   e.preventDefault();
-//   // Destructure dispatch from the context
 
-//   dispatch({ type: "formSubmitHandler", payload: userInfo });
-// };
   return (
     <UserListContext.Provider value={{userList,dispatch}}>
       {children}
