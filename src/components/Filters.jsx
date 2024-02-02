@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useRoomList } from "../context/RoomListProvider";
 import Titles from "./Titles";
-import { Link } from "react-router-dom";
 
 const Filters = () => {
   const {
