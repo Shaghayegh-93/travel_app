@@ -14,7 +14,7 @@ const rooms= featuredRoomList?.map((item) => {
     <div className="flex flex-col">
       <Titles title="Featured Rooms" />
       <div className="grid grid-cols-1 md:grid-cols-3 max-w-[1400px] py-16 px-4 m-auto gap-10 gap-y-20">
-        {isLoading ? <Loading /> : rooms}
+        {!isLoading ? <Loading /> : rooms}
       </div>
     </div>
   );
