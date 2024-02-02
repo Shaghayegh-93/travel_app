@@ -2,7 +2,7 @@ import React from "react";
 
 const Titles = ({ title }) => {
   return (
-    <div className="flex flex-col items-center justify-center mt-10 ">
+    <div className="flex flex-col items-center justify-center mt-6 ">
       <h2 className="text-black/80 font-bold text-4xl tracking-widest mb-3 font-Gilda text-center">
         {title}
       </h2>
