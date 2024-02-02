@@ -226,7 +226,7 @@ export function BookedRoomList() {
         className="relative border-none cursor-pointer"
       >
         <FaHotel className="w-6 h-6 text-gray-700" />
-        <span className="absolute text-xs top-0 right-1 h-4 leading-4 text-center bg-red-600 text-white rounded-full   py-2 px-[5px]  flex items-center justify-center">
+        <span className="absolute text-xs top-0 right-1 h-4 leading-4 text-center bg-blue-400 text-black rounded-full   py-2 px-[5px]  flex items-center justify-center">
           {bookedRoom && bookedRoom.length >= 0 ? (
             <span className="text-white">{bookedRoom.length}</span>
           ) : (
