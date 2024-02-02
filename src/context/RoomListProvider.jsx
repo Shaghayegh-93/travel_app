@@ -1,9 +1,7 @@
 import React, { createContext, useContext, useReducer, useState } from "react";
-import items from "../../data";
 import { useEffect } from "react";
-import { createClient } from "contentful";
 import Client from "../contentful";
-import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const RoomListContext = createContext();
 const initialState = {
@@ -21,6 +19,7 @@ const initialState = {
   maxSize: 0,
   breakfast: false,
   pets: false,
+  bookedRoom: JSON.parse(localStorage.getItem("bookedRoom")) || [],
 };
 
 function roomListReducer(state, action) {
@@ -28,7 +27,7 @@ function roomListReducer(state, action) {
     case "loading":
       return {
         ...state,
-        isLoading: false,
+        isLoading: true,
       };
     case "roomList/loaded":
       return {
@@ -56,7 +55,6 @@ function roomListReducer(state, action) {
       return {
         ...state,
         sortedRoomList: action.payload,
-        
       };
     case "maxPrice/loaded":
       return {
@@ -68,7 +66,18 @@ function roomListReducer(state, action) {
         ...state,
         maxSize: action.payload,
       };
-
+    case "getBookedRoom/loaded":
+      return {
+        ...state,
+        bookedRoom: [...state.bookedRoom, ...action.payload],
+      };
+    case "removeBookedRoomListHandler":
+      return {
+        ...state,
+        bookedRoom: state.bookedRoom.filter(
+          (room) => room.id !== action.payload.id
+        ),
+      };
     default:
       throw new Error("Unknown action");
   }
@@ -91,14 +100,11 @@ const RoomListProvider = ({ children }) => {
       maxSize,
       breakfast,
       pets,
+      bookedRoom,
     },
     dispatch,
   ] = useReducer(roomListReducer, initialState);
-  // maxPrice = Math.max(...roomList?.fields.map((room) => room.fields.price));
-  // console.log("maxxxxxxxxxx", maxPrice);
-  // maxSize = Math.max(...rooms.map((room) => room.size));
-  console.log("sortedRoomList", sortedRoomList);
-  console.log("type", type);
+
   const formatData = (rooms) => {
     let tempRooms = rooms.map((item) => {
       let id = item.sys.id;
@@ -145,10 +151,9 @@ const RoomListProvider = ({ children }) => {
 
       dispatch({
         type: "singleRoom/loaded",
+
         payload: formatData(response.items),
       });
-      console.log("kkkkkkkkkkkk", room);
-      // dispatch({ type: "roomList/loaded", payload: response.items });
     } catch (error) {
       console.log(error);
     } finally {
@@ -162,7 +167,7 @@ const RoomListProvider = ({ children }) => {
     const value = e.type === "checkbox" ? target.checked : target.value;
 
     dispatch({ type: "filterdRoom/loaded", payload: { value, name } });
-    filterdRoomList(); 
+    filterdRoomList();
   };
   const filterdRoomList = () => {
     let tempRooms = [...roomList];
@@ -176,10 +181,18 @@ const RoomListProvider = ({ children }) => {
     if (price !== 0) {
       tempRooms = tempRooms.filter((room) => room.price <= Number(price));
     }
-    console.log("sorteddddd", tempRooms);
 
     dispatch({ type: "filterdRoomList/loaded", payload: tempRooms });
   };
+  const getBookedRoom = () => {
+    dispatch({ type: "getBookedRoom/loaded", payload: room });
+    toast.success("Your Room Has Been Successfully Added To Your Basket!");
+  };
+  
+
+  useEffect(() => {
+    localStorage.setItem("bookedRoom", JSON.stringify(bookedRoom));
+  }, [bookedRoom]);
 
   return (
     <RoomListContext.Provider
@@ -201,6 +214,9 @@ const RoomListProvider = ({ children }) => {
         filterChangedHandler,
         sortedRoomList,
         filterdRoomList,
+        bookedRoom,
+        getBookedRoom,
+        dispatch,
       }}
     >
       {children}
