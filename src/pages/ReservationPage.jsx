@@ -102,7 +102,7 @@ const ReservationPage = () => {
             </div>
 
             <form
-              className="flex flex-col bg-white border-2 md:border-none  rounded-md border-black/30 p-4 md:p-8  gap-y-4  md:absolute  md:right-40"
+              className="flex flex-col bg-white border-2 md:border-none  rounded-md border-black/30 p-4 md:py-2 md:px-4  gap-y-4  md:absolute  md:right-40"
               onSubmit={formSubmitHandler}
             >
               <div className="flex flex-col md:flex-row gap-2">
