@@ -11,12 +11,12 @@ import heroImage from "../assets/images/defaultBcg.jpeg";
 
 const HomePage = () => {
   return (
-    <div className="App">
+    <div className="">
       <Layout>
         <Hero backgroundImage={heroImage}>
           <Banner
             title="Luxurious Rooms"
-            subtitle=" Delux Rooms Starting At $299"
+            subtitle=" Delux Rooms Starting at $299"
           >
             <button className="py-2 font-medium  border-2 hover:bg-black hover:text-white transition ease-in duration-300 ">
               <Link to="/rooms">ROOMS</Link>
