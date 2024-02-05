@@ -11,11 +11,10 @@ import Room from "../components/Room";
 
 const RoomListPage = () => {
   const { roomList, sortedRoomList } = useRoomList();
-  console.log("sortedRoomList", sortedRoomList);
   if (roomList.length === 0)
     return <p>unfortunately no rooms matched your search parametrs.</p>;
   return (
-    <div>
+    <div className="">
       <Layout>
         <Hero backgroundImage={heroImage}>
           <Banner title="OUR ROOMS">
@@ -26,9 +25,11 @@ const RoomListPage = () => {
         </Hero>
         <Filters />
         {sortedRoomList?.length === 0 ? (
-          <p className="flex items-center justify-center mb-10">Unfortunately, no rooms matched your search parameters.</p>
+          <p className="flex items-center justify-center mb-10">
+            Unfortunately, no rooms matched your search parameters.
+          </p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-auto-fill-270 max-w-[1400px] py-16 px-4 m-auto gap-10 gap-y-20">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-auto-fill-270 max-w-[1400px]  px-4 m-auto gap-10 gap-y-10">
             {sortedRoomList?.map((item) => {
               return <Room item={item} key={item.id} />;
             })}
