@@ -2,9 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import defaultImage from "../assets/images/room-1.jpeg";
 
-
 const Room = ({ item }) => {
-
   return (
     <div>
       <div className="relative ">
@@ -23,7 +21,7 @@ const Room = ({ item }) => {
           />
 
           <button className="border p-2 z-20 opacity-0 group-hover:opacity-100  items-center absolute top-[40%] left-[35%] bg-gray-400 transition-opacity ease-in duration-500 delay-100">
-            <Link to={`/rooms/${item.slug}`}>FEATURED</Link>
+            <Link to={`/rooms/${item.slug}`}>Details</Link>
           </button>
         </div>
 
