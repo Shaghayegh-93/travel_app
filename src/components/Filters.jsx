@@ -29,7 +29,6 @@ const Filters = () => {
     <option value={capacity}>{capacity}</option>
   ));
 
-
   useEffect(() => {
     filterdRoomList();
   }, [type, capacity, maxPrice]);
@@ -37,9 +36,14 @@ const Filters = () => {
   return (
     <div className="flex flex-col ">
       <Titles title="Search Rooms" />
-      <form className="max-w-[1400px] py-16 px-4 m-auto gap-2 md:gap-4 flex">
-        <div className="flex flex-col">
-          <label htmlFor="type"> Room Type </label>
+      <form className="max-w-[1400px] py-10 px-4 m-auto gap-2 md:gap-4 flex flex-col md:flex-row">
+        <div className="flex ">
+          <label
+            className="mr-2 font-Gilda text-lg flex items-center"
+            htmlFor="type "
+          >
+            Filter By Room Type :
+          </label>
           <select
             name="type"
             id="type"
@@ -51,34 +55,6 @@ const Filters = () => {
             {typeOptions}
           </select>
         </div>
-        <div className="flex flex-col">
-          <label htmlFor="capacity"> Guests </label>
-          <select
-            name="capacity"
-            id="capacity"
-            value={capacity}
-            onChange={filterChangedHandler}
-            className="border"
-            required
-          >
-            {capacityOptions}
-          </select>
-        </div>
-        <div className="flex flex-col">
-          <label htmlFor="price"> Room Price ${maxPrice} </label>
-          <input
-            type="range"
-            name="price"
-            id="price"
-            value={price}
-            onChange={filterChangedHandler}
-            className="border"
-            min={minPrice}
-            max={maxPrice || 1000}
-            required
-          />
-        </div>
-      
       </form>
     </div>
   );
