@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { Link, NavLink, useLocation, useParams } from "react-router-dom";
-import { FaHotel, FaTrashAlt } from "react-icons/fa";
+import { FaHotel, FaTrashAlt, FaPlus, FaMinus } from "react-icons/fa";
 import { useRoomList } from "../context/RoomListProvider";
 import Modal from "./Modal";
 import toast from "react-hot-toast";
@@ -10,7 +10,7 @@ const Navbar = () => {
   const [nav, setNav] = useState(false);
   const location = useLocation();
   const { slug } = useParams();
-  const { room, bookedRoom } = useRoomList();
+  const { room, bookedRoom, optionHandler } = useRoomList();
 
   const navClickHandler = () => {
     setNav(!nav);
@@ -23,19 +23,19 @@ const Navbar = () => {
   };
 
   return (
-    <div className="w-full flex justify-between items-center p-4 bg-gray-50">
+    <nav className="overflow-hidden w-screen flex justify-between items-center p-4 bg-gray-50 ">
       <div className="flex  items-center justify-between w-full">
-        <div className="text-gray-500 font-bold text-2xl z-20 flex items-center justify-center border-2 px-4 md:px-12 py-1 md:mr-8">
+        <div className="text-gray-500 font-bold text-2xl z-20 flex items-center justify-center border-2 px-4 md:px-12 py-1 md:mr-8 cursor-pointer">
           <NavLink to="/">
             <span className="pr-2">BEST</span>
-            <span className=" md:text-black">HOTEL</span>
+            <span className="  md:text-black">HOTEL</span>
           </NavLink>
         </div>
 
         <HiMenuAlt3
           onClick={navClickHandler}
           size={25}
-          className="z-20 text-gray-500 cursor-pointer md:hidden -mr-28  "
+          className="z-20 text-gray-500 cursor-pointer md:hidden -mr-40"
         />
 
         <nav className="z-20 ">
@@ -87,8 +87,8 @@ const Navbar = () => {
       <div
         className={
           nav
-            ? "fixed top-0 left-0 w-full h-screen items-center bg-black/90 text-gray-300 py-7 px-4  z-10 ease-in duration-500"
-            : "absolute h-screen top-0 left-[-100%] z-10 ease-in duration-50000"
+            ? "md:hidden fixed top-0 left-0 w-full h-screen items-center bg-black/90 text-gray-300 py-7 px-4  z-10 ease-in duration-500 "
+            : "md:hidden absolute h-screen top-0 left-[-100%] z-10 ease-in duration-50000"
         }
       >
         <ul className="flex flex-col items-center justify-center w-full h-full gap-y-10 mt-20">
@@ -134,14 +134,14 @@ const Navbar = () => {
           </li>
         </ul>
       </div>
-    </div>
+    </nav>
   );
 };
 
 export default Navbar;
 
 export function BookedRoomList() {
-  const { room, bookedRoom, dispatch } = useRoomList();
+  const { room, bookedRoom, dispatch, optionHandler } = useRoomList();
 
   const [isOpen, setIsOpen] = useState(false);
   const removeBookedRoomHandler = (room) => {
@@ -155,30 +155,30 @@ export function BookedRoomList() {
         {bookedRoom &&
           bookedRoom?.map((room) => (
             <div
-              className="flex items-center justify-between mb-4 text-white border"
+              className="flex items-center justify-between mb-4 text-white border mr-2"
               room={room}
               key={room.id}
             >
-              <div className="flex w-full justify-between p-4">
+              <div className="flex w-full justify-between p-4  ">
                 <div className="md:w-1/2">
                   <div className="flex flex-col md:flex-row ">
                     <div className="md:w-1/4  flex flex-col text-sm ">
-                      <h3 className="md:font-bold ">Details</h3>
-                      <ul className="flex flex-col">
+                      <h3 className="md:font-bold text-base ">Details</h3>
+                      <ul className="flex flex-col ">
                         <li>
-                          <span className="font-medium text-gray-300 text-sm">
+                          <span className="md:font-medium  text-gray-300 text-sm">
                             Price:
                           </span>
                           ${room.price}
                         </li>
                         <li>
-                          <span className="font-medium text-gray-300 text-sm ">
+                          <span className="md:font-medium text-gray-300 text-sm ">
                             Size:
                           </span>
                           {room.size}
                         </li>
                         <li>
-                          <span className="font-medium text-gray-300 text-sm ">
+                          <span className="md:font-medium text-gray-300 text-sm ">
                             Capacity:
                           </span>
                           {room.capacity > 1
@@ -187,7 +187,7 @@ export function BookedRoomList() {
                         </li>
                         <li>
                           {room?.pets ? (
-                            <span className="font-medium text-gray-300 text-sm ">
+                            <span className="md:font-medium text-gray-300 text-sm ">
                               Pets Allowed
                             </span>
                           ) : (
@@ -204,12 +204,31 @@ export function BookedRoomList() {
                   </div>
                 </div>
 
-                <div className="md:w-3/4 w-full items-center flex">
+                <div className="md:w-3/4 w-full  ml-4 flex ">
                   <img
                     src={room?.images?.[0] || defaultImage}
                     alt=""
                     className="w-full rounded-md  object-cover"
                   />
+                </div>
+              </div>
+              <div>
+                <div className="flex flex-col items-center ">
+                  <button
+                    className="inline-block  rounded-lg text-sm px-2 py-1"
+                    disabled={room?.length <= 1}
+                    // disabled={room?.id.length <= 1}
+                    onClick={() => optionHandler(room.id, "dec")}
+                  >
+                    <FaMinus className="w-2 h-2 inline-block" />
+                  </button>
+                  <span className="inline-block text-base">{room.length}</span>
+                  <button
+                    className="inline-block  rounded-lg text-sm px-2 py-1"
+                    onClick={() => optionHandler(room.id, "inc")}
+                  >
+                    <FaPlus className="w-2 h-2 inline-block" />
+                  </button>
                 </div>
               </div>
               <button
