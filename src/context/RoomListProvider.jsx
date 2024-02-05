@@ -1,4 +1,6 @@
 import React, { createContext, useContext, useReducer, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+
 import { useEffect } from "react";
 import Client from "../contentful";
 import toast from "react-hot-toast";
@@ -27,12 +29,16 @@ function roomListReducer(state, action) {
     case "loading":
       return {
         ...state,
-        isLoading: true,
+        isLoading: action.payload,
       };
     case "roomList/loaded":
       return {
         ...state,
-        roomList: action.payload,
+        roomList: action.payload.sort((roomA, roomB) => {
+          if (roomA.price > roomB.price) return 1;
+          if (roomA.price < roomB.price) return -1;
+          return 0;
+        }),
       };
 
     case "singleRoom/loaded":
@@ -54,7 +60,11 @@ function roomListReducer(state, action) {
     case "filterdRoomList/loaded":
       return {
         ...state,
-        sortedRoomList: action.payload,
+        sortedRoomList: action.payload.sort((roomA, roomB) => {
+          if (roomA.price > roomB.price) return 1;
+          if (roomA.price < roomB.price) return -1;
+          return 0;
+        }),
       };
     case "maxPrice/loaded":
       return {
@@ -69,8 +79,10 @@ function roomListReducer(state, action) {
     case "getBookedRoom/loaded":
       return {
         ...state,
-        bookedRoom: [...state.bookedRoom, ...action.payload],
+
+        bookedRoom: [...state.bookedRoom, action.payload],
       };
+
     case "removeBookedRoomListHandler":
       return {
         ...state,
@@ -78,8 +90,22 @@ function roomListReducer(state, action) {
           (room) => room.id !== action.payload.id
         ),
       };
+    case "countBookedRoom":
+      return {
+        ...state,
+        bookedRoom: state.bookedRoom.map((room) => {
+          if (room.id === action.payload.id) {
+            if (action.payload.type === "dec") {
+              return { ...room, length: room.length - 1 };
+            } else if (action.payload.type === "inc") {
+              return { ...room, length: room.length + 1 };
+            }
+          }
+          return room;
+        }),
+      };
     default:
-      throw new Error("Unknown action");
+      return state;
   }
 }
 
@@ -104,6 +130,8 @@ const RoomListProvider = ({ children }) => {
     },
     dispatch,
   ] = useReducer(roomListReducer, initialState);
+  const navigate = useNavigate();
+  const { slug } = useParams();
 
   const formatData = (rooms) => {
     let tempRooms = rooms.map((item) => {
@@ -184,11 +212,22 @@ const RoomListProvider = ({ children }) => {
 
     dispatch({ type: "filterdRoomList/loaded", payload: tempRooms });
   };
-  const getBookedRoom = () => {
-    dispatch({ type: "getBookedRoom/loaded", payload: room });
-    toast.success("Your Room Has Been Successfully Added To Your Basket!");
+
+  const getBookedRoom = (selectedRoom,slug) => {
+    if (bookedRoom.some((room) => room.id === selectedRoom.id)) {
+      toast.error("You already added this room");
+    } else {
+      dispatch({ type: "getBookedRoom/loaded", payload: selectedRoom });
+      navigate(`/rooms/${slug}/reservation`);
+      toast.success("Your room has been successfully added to your basket!");
+    }
   };
-  
+
+  const optionHandler = (id, type) => {
+    dispatch({ type: "countBookedRoom", payload: { id, type } });
+    console.log("rooooooooom", id);
+    console.log("booooooooked", bookedRoom);
+  };
 
   useEffect(() => {
     localStorage.setItem("bookedRoom", JSON.stringify(bookedRoom));
@@ -217,6 +256,7 @@ const RoomListProvider = ({ children }) => {
         bookedRoom,
         getBookedRoom,
         dispatch,
+        optionHandler,
       }}
     >
       {children}
