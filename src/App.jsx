@@ -16,7 +16,7 @@ function App() {
       <RoomListProvider>
         <Toaster />
 
-        <div className="App">
+        <div className="overflow-x-hidden">
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="rooms" element={<RoomListPage />} />
