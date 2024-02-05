@@ -27,7 +27,11 @@ const Slider = () => {
     setCurrentIndex(newIndex);
   };
   const manualSlideHandler = (id) => {
+    // setCurrentIndex(id);
+    // console.log("Clicked on dot with id:", id);
+    console.log("Clicked on dot with id:", id);
     setCurrentIndex(id);
+    console.log("Current index after click:", currentIndex);
   };
   return (
     <div className="flex flex-col">
