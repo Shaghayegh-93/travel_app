@@ -11,6 +11,7 @@ const SingleRoomPage = () => {
 
   const { getSingleRoom, room, getBookedRoom, isLoading } = useRoomList();
   //   useRoomList();
+  console.log("slug", slug);
   useEffect(() => {
     getSingleRoom(slug);
   }, [slug]);
@@ -26,11 +27,11 @@ const SingleRoomPage = () => {
                 <Link to="/rooms"> ROOMS</Link>
               </button>
               <button
-                onClick={()=>getBookedRoom(room[0])}
+                onClick={() => getBookedRoom(room[0], slug)}
                 className="py-2 font-medium border-2 bg-black text-white hover:bg-white hover:text-black transition ease-in duration-300 w-1/2"
               >
                 BOOk ROOM
-                {/* <Link to={`/rooms/${slug}/reservation`}> BOOk ROOM</Link> */}
+                {/* <Link to={`/rooms/reservation`}> BOOk ROOM</Link> */}
               </button>
             </div>
           </Banner>
