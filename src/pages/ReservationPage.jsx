@@ -86,6 +86,7 @@ const ReservationPage = () => {
     toast.success("Your Room Successfully Booked.");
   };
 
+  const { slug } = useRoomList();
   return (
     <div className="bg-gray-100 md:bg-white">
       <Layout>
@@ -126,13 +127,13 @@ const ReservationPage = () => {
                     className="text-black font-bold text-base mb-2"
                     htmlFor="lastName"
                   >
-                    Lastname:
+                    Last Name:
                   </label>
                   <input
                     onChange={formChangeHandler}
                     className="border py-2 px-4"
                     type="text"
-                    placeholder="Enter  LastName"
+                    placeholder="Enter Last Name"
                     name="lastName"
                   />
                 </div>
@@ -144,7 +145,7 @@ const ReservationPage = () => {
                     className="text-black font-bold text-base mb-2"
                     htmlFor="checkIn"
                   >
-                    Check In/out:
+                    Check In/Out:
                   </label>
                   <div
                     className="py-2 px-2  border"
@@ -170,7 +171,7 @@ const ReservationPage = () => {
                     className="text-black font-bold text-base mb-2"
                     htmlFor="phoneNumber"
                   >
-                    phoneNumber
+                    Phone Number
                   </label>
                   <input
                     onChange={formChangeHandler}
@@ -187,14 +188,14 @@ const ReservationPage = () => {
                     className="text-black font-bold text-base mb-2"
                     htmlFor="email"
                   >
-                    email
+                    Email
                   </label>
                   <input
                     onChange={formChangeHandler}
                     className="border py-2 px-4"
                     type="email"
                     id=""
-                    placeholder="Enter  Email"
+                    placeholder="Enter Email"
                     name="email"
                   />
                 </div>
@@ -203,7 +204,7 @@ const ReservationPage = () => {
                     className="text-black font-bold text-base mb-2"
                     htmlFor="email"
                   >
-                    guest:
+                    Guest:
                   </label>
                   <input
                     onChange={formChangeHandler}
@@ -270,7 +271,8 @@ const ReservationPage = () => {
                   Submit
                 </button>
                 <button className="py-2 px-4 w-1/2">
-                  <Link to="/rooms"> HOME</Link>
+                  {/* <Link to={`/rooms/${slug}`}> CANCEL</Link> */}
+                  <Link to="/rooms"> CANCEL</Link>
                 </button>
               </div>
             </form>
