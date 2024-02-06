@@ -39,6 +39,7 @@ function roomListReducer(state, action) {
           if (roomA.price < roomB.price) return -1;
           return 0;
         }),
+        // sortedRoomList: action.payload,
       };
 
     case "singleRoom/loaded":
@@ -60,11 +61,13 @@ function roomListReducer(state, action) {
     case "filterdRoomList/loaded":
       return {
         ...state,
+        // roomList: action.payload,
         sortedRoomList: action.payload.sort((roomA, roomB) => {
           if (roomA.price > roomB.price) return 1;
           if (roomA.price < roomB.price) return -1;
           return 0;
         }),
+        // sortedRoomList: action.payload.roomList,
       };
     case "maxPrice/loaded":
       return {
@@ -96,9 +99,9 @@ function roomListReducer(state, action) {
         bookedRoom: state.bookedRoom.map((room) => {
           if (room.id === action.payload.id) {
             if (action.payload.type === "dec") {
-              return { ...room, length: room.length - 1 };
+              return { ...room, length: room?.length - 1 };
             } else if (action.payload.type === "inc") {
-              return { ...room, length: room.length + 1 };
+              return { ...room, length: room?.length + 1 };
             }
           }
           return room;
@@ -196,6 +199,7 @@ const RoomListProvider = ({ children }) => {
 
     dispatch({ type: "filterdRoom/loaded", payload: { value, name } });
     filterdRoomList();
+    dispatch({ type: "filterdRoom/loaded", payload: { value: all, name } });
   };
   const filterdRoomList = () => {
     let tempRooms = [...roomList];
@@ -203,17 +207,22 @@ const RoomListProvider = ({ children }) => {
     if (type !== "all") {
       tempRooms = tempRooms.filter((room) => room.type === type);
     }
-    if (capacity !== 1) {
-      tempRooms = tempRooms.filter((room) => room.capacity >= Number(capacity));
-    }
-    if (price !== 0) {
-      tempRooms = tempRooms.filter((room) => room.price <= Number(price));
-    }
+    // if (capacity !== 1) {
+    //   tempRooms = tempRooms.filter((room) => room.capacity >= Number(capacity));
+    // }
+    // if (price !== 0) {
+    //   tempRooms = tempRooms.filter((room) => room.price <= Number(price));
+    // }
 
-    dispatch({ type: "filterdRoomList/loaded", payload: tempRooms });
+    dispatch({
+      type: "filterdRoomList/loaded",
+      payload: tempRooms,
+    });
+
+    
   };
 
-  const getBookedRoom = (selectedRoom,slug) => {
+  const getBookedRoom = (selectedRoom, slug) => {
     if (bookedRoom.some((room) => room.id === selectedRoom.id)) {
       toast.error("You already added this room");
     } else {
