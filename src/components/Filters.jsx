@@ -17,17 +17,17 @@ const Filters = () => {
     maxSize,
     filterdRoomList,
   } = useRoomList();
-  const types = roomList.map((room) => room.type);
+  const types = roomList?.map((room) => room.type);
   let uniqueTypes = [...new Set(types)];
   uniqueTypes = ["all", ...uniqueTypes];
   const typeOptions = uniqueTypes.map((type) => (
     <option value={type}>{type}</option>
   ));
-  const peopleCapacity = roomList.map((room) => room.capacity);
-  let uniqueCapacity = [...new Set(peopleCapacity)];
-  const capacityOptions = uniqueCapacity.map((capacity) => (
-    <option value={capacity}>{capacity}</option>
-  ));
+  // const peopleCapacity = roomList.map((room) => room.capacity);
+  // let uniqueCapacity = [...new Set(peopleCapacity)];
+  // const capacityOptions = uniqueCapacity.map((capacity) => (
+  //   <option value={capacity}>{capacity}</option>
+  // ));
 
   useEffect(() => {
     filterdRoomList();
