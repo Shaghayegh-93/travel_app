@@ -90,7 +90,10 @@ const ReservationPage = () => {
   return (
     <div className="bg-gray-100 md:bg-white">
       <Layout>
-        <div className="max-w-[1400px] py-4 px-4 m-auto flex flex-col">
+        <div
+          className="max-w-[1400px] py-4 px-4 m-auto flex flex-col"
+          onClick={() => setIsDateOpen(!isDateOpen)}
+        >
           <Titles title="Reservation" />
           <div className="flex items-center justify-center mx-auto mt-10 relative">
             <div className="w-full h-screen hidden sm:block">
