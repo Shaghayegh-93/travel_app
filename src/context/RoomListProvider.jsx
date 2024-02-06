@@ -151,7 +151,6 @@ const RoomListProvider = ({ children }) => {
           type: "roomList/loaded",
           payload: formatData(response.items),
         });
-        
       } catch (error) {
         console.log(error);
       } finally {
@@ -207,8 +206,6 @@ const RoomListProvider = ({ children }) => {
       type: "filterdRoomList/loaded",
       payload: tempRooms,
     });
-
-    
   };
 
   const getBookedRoom = (selectedRoom, slug) => {
@@ -223,8 +220,6 @@ const RoomListProvider = ({ children }) => {
 
   const optionHandler = (id, type) => {
     dispatch({ type: "countBookedRoom", payload: { id, type } });
-    console.log("rooooooooom", id);
-    console.log("booooooooked", bookedRoom);
   };
 
   useEffect(() => {
