@@ -11,7 +11,7 @@ import Room from "../components/Room";
 
 const RoomListPage = () => {
   const { roomList, sortedRoomList } = useRoomList();
-  if (roomList.length === 0)
+  if (roomList?.length === 0)
     return <p>unfortunately no rooms matched your search parametrs.</p>;
   return (
     <div className="">
