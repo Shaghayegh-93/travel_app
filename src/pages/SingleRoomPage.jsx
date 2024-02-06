@@ -87,8 +87,8 @@ const SingleRoomPage = () => {
               <div className="flex flex-col w-full">
                 <h3 className="font-bold text">Extras</h3>
                 <ul className="grid grid-cols-1 md:grid-cols-3 gap-y-2">
-                  {room[0]?.extras.map((extra) => (
-                    <li key={room[0].id}>-{extra}</li>
+                  {room[0]?.extras.map((extra,index) => (
+                    <li key={index}>-{extra}</li>
                   ))}
                 </ul>
               </div>
