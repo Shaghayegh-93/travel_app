@@ -8,30 +8,24 @@ const Filters = () => {
     type,
     capacity,
     price,
-    minPrice,
-    minSize,
     breakfast,
     pets,
     filterChangedHandler,
-    maxPrice,
-    maxSize,
+
     filterdRoomList,
   } = useRoomList();
   const types = roomList?.map((room) => room.type);
   let uniqueTypes = [...new Set(types)];
   uniqueTypes = ["all", ...uniqueTypes];
-  const typeOptions = uniqueTypes.map((type) => (
-    <option value={type}>{type}</option>
+  const typeOptions = uniqueTypes.map((type, index) => (
+    <option key={index} value={type}>
+      {type}
+    </option>
   ));
-  // const peopleCapacity = roomList.map((room) => room.capacity);
-  // let uniqueCapacity = [...new Set(peopleCapacity)];
-  // const capacityOptions = uniqueCapacity.map((capacity) => (
-  //   <option value={capacity}>{capacity}</option>
-  // ));
 
   useEffect(() => {
     filterdRoomList();
-  }, [type, capacity, maxPrice]);
+  }, [type]);
 
   return (
     <div className="flex flex-col ">

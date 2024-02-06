@@ -15,10 +15,6 @@ const initialState = {
   type: "all",
   capacity: 1,
   price: 0,
-  minPrice: 0,
-  maxPrice: 0,
-  minSize: 0,
-  maxSize: 0,
   breakfast: false,
   pets: false,
   bookedRoom: JSON.parse(localStorage.getItem("bookedRoom")) || [],
@@ -123,10 +119,6 @@ const RoomListProvider = ({ children }) => {
       type,
       capacity,
       price,
-      minPrice,
-      maxPrice,
-      minSize,
-      maxSize,
       breakfast,
       pets,
       bookedRoom,
@@ -159,10 +151,7 @@ const RoomListProvider = ({ children }) => {
           type: "roomList/loaded",
           payload: formatData(response.items),
         });
-        let maxPrice = Math.max(...rooms.map((room) => room.price));
-        let maxSize = Math.max(...rooms.map((room) => room.size));
-        dispatch({ type: "maxPrice/loaded", payload: maxPrice });
-        dispatch({ type: "maxSize/loaded", payload: maxSize });
+        
       } catch (error) {
         console.log(error);
       } finally {
@@ -253,10 +242,6 @@ const RoomListProvider = ({ children }) => {
         type,
         capacity,
         price,
-        minPrice,
-        maxPrice,
-        minSize,
-        maxSize,
         breakfast,
         pets,
         filterChangedHandler,

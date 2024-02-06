@@ -44,7 +44,7 @@ const SingleRoomPage = () => {
               {" "}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-20  ">
                 {room[0]?.images
-                  .map((image) => <img className="" src={image} />)
+                  .map((image) => <img key={room[0]?.id} className="" src={image} />)
                   .slice(1, 4)}
               </div>
               <div className="flex flex-col md:flex-row gap-10">
@@ -88,7 +88,7 @@ const SingleRoomPage = () => {
                 <h3 className="font-bold text">Extras</h3>
                 <ul className="grid grid-cols-1 md:grid-cols-3 gap-y-2">
                   {room[0]?.extras.map((extra) => (
-                    <li>-{extra}</li>
+                    <li key={room[0].id}>-{extra}</li>
                   ))}
                 </ul>
               </div>
