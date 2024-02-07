@@ -10,7 +10,7 @@ const Room = ({ item }) => {
           <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-50 transition-opacity ease-in duration-300"></div>
 
           <span className="absolute top-0 left-0 text-white p-1 rounded-br-md bg-black/60 opacity-100 group-hover:opacity-0 transition-opacity ease-in duration-300">
-            ${item?.price}&nbsp; <br />
+            ${item.price}&nbsp; <br />
             <span className="text-[12px]">per night</span>
           </span>
 
