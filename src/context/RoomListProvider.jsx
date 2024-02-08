@@ -12,11 +12,15 @@ const initialState = {
   featuredRoomList: [],
   room: null,
   isLoading: false,
-  type: "all",
-  capacity: 1,
-  price: 0,
-  breakfast: false,
-  pets: false,
+  roomOption: {
+    type: "all",
+    capacity: 1,
+    price: 0,
+    breakfast: false,
+    pets: false,
+  },
+  maxPrice: 0,
+
   bookedRoom: JSON.parse(localStorage.getItem("bookedRoom")) || [],
 };
 
@@ -30,12 +34,12 @@ function roomListReducer(state, action) {
     case "roomList/loaded":
       return {
         ...state,
+
         roomList: action.payload.sort((roomA, roomB) => {
           if (roomA.price > roomB.price) return 1;
           if (roomA.price < roomB.price) return -1;
           return 0;
         }),
-        // sortedRoomList: action.payload,
       };
 
     case "singleRoom/loaded":
@@ -48,33 +52,31 @@ function roomListReducer(state, action) {
         ...state,
         featuredRoomList: action.payload,
       };
-    case "filterdRoom/loaded":
+    case "roomFilterOption":
       return {
         ...state,
-
-        [action.payload.name]: action.payload.value,
+        roomOption: {
+          ...state.roomOption,
+          ...action.payload,
+        },
       };
-    case "filterdRoomList/loaded":
+
+    case "getAllFilterData":
       return {
         ...state,
-        // roomList: action.payload,
         sortedRoomList: action.payload.sort((roomA, roomB) => {
           if (roomA.price > roomB.price) return 1;
           if (roomA.price < roomB.price) return -1;
           return 0;
         }),
-        // sortedRoomList: action.payload.roomList,
       };
+
     case "maxPrice/loaded":
       return {
         ...state,
         maxPrice: action.payload,
       };
-    case "maxSize/loaded":
-      return {
-        ...state,
-        maxSize: action.payload,
-      };
+   
     case "getBookedRoom/loaded":
       return {
         ...state,
@@ -116,11 +118,8 @@ const RoomListProvider = ({ children }) => {
       featuredRoomList,
       sortedRoomList,
       room,
-      type,
-      capacity,
-      price,
-      breakfast,
-      pets,
+      roomOption,
+      maxPrice,
       bookedRoom,
     },
     dispatch,
@@ -151,6 +150,8 @@ const RoomListProvider = ({ children }) => {
           type: "roomList/loaded",
           payload: formatData(response.items),
         });
+        let maxPrice = Math.max(...rooms.map((room) => room.price));
+        dispatch({ type: "maxPrice/loaded", payload: maxPrice });
       } catch (error) {
         console.log(error);
       } finally {
@@ -180,36 +181,46 @@ const RoomListProvider = ({ children }) => {
     }
   }
 
-  const filterChangedHandler = (e) => {
-    const target = e.target;
-    const name = e.target.name;
-    const value = e.type === "checkbox" ? target.checked : target.value;
-
-    dispatch({ type: "filterdRoom/loaded", payload: { value, name } });
-    filterdRoomList();
-    dispatch({ type: "filterdRoom/loaded", payload: { value: all, name } });
-  };
-  const filterdRoomList = () => {
-    let tempRooms = [...roomList];
-
-    if (type !== "all") {
-      tempRooms = tempRooms.filter((room) => room.type === type);
-    }
-    // if (capacity !== 1) {
-    //   tempRooms = tempRooms.filter((room) => room.capacity >= Number(capacity));
-    // }
-    // if (price !== 0) {
-    //   tempRooms = tempRooms.filter((room) => room.price <= Number(price));
-    // }
-
+  const filterChangeHandler = (e) => {
+    const { value, type, checked, name } = e.target;
+    const payloadValue = type === "checkbox" ? checked : value;
     dispatch({
-      type: "filterdRoomList/loaded",
-      payload: tempRooms,
+      type: "roomFilterOption",
+      payload: { [name]: payloadValue },
     });
   };
 
+  const filterRooms = (roomOption) => {
+    let filteredRooms = [...roomList];
+
+    if (roomOption?.type !== "all") {
+      filteredRooms = filteredRooms.filter(
+        (room) => room.type === roomOption?.type
+      );
+    }
+
+    filteredRooms = filteredRooms.filter(
+      (room) => room.capacity >= roomOption?.capacity
+    );
+
+    filteredRooms = filteredRooms.filter(
+      (room) => room.price >= roomOption.price
+    );
+
+    if (roomOption.breakfast) {
+      filteredRooms = filteredRooms.filter((room) => room.breakfast);
+    }
+
+    if (roomOption.pets) {
+      filteredRooms = filteredRooms.filter((room) => room.pets);
+    }
+
+    console.log(filteredRooms);
+    return dispatch({ type: "getAllFilterData", payload: filteredRooms });
+  };
+
   const getBookedRoom = (selectedRoom, slug) => {
-    if (bookedRoom.some((room) => room.id === selectedRoom.id)) {
+    if (bookedRoom?.some((room) => room.id === selectedRoom.id)) {
       toast.error("You already added this room");
     } else {
       dispatch({ type: "getBookedRoom/loaded", payload: selectedRoom });
@@ -234,18 +245,15 @@ const RoomListProvider = ({ children }) => {
         featuredRoomList,
         room,
         getSingleRoom,
-        type,
-        capacity,
-        price,
-        breakfast,
-        pets,
-        filterChangedHandler,
+        roomOption,
         sortedRoomList,
-        filterdRoomList,
         bookedRoom,
         getBookedRoom,
         dispatch,
         optionHandler,
+        filterChangeHandler,
+        filterRooms,
+        maxPrice,
       }}
     >
       {children}
