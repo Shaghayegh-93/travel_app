@@ -3,8 +3,14 @@ import { useRoomList } from "../context/RoomListProvider";
 import Titles from "./Titles";
 
 const Filters = () => {
-  const { roomList, roomOption, filterChangeHandler, filterRooms, maxPrice } =
-    useRoomList();
+  const {
+    roomList,
+    roomOption,
+    filterChangeHandler,
+    filterRooms,
+    maxPrice,
+    minPrice,
+  } = useRoomList();
   const { type, capacity, price, pets, breakfast } = roomOption;
 
   const types = roomList?.map((room) => room.type);
@@ -54,7 +60,13 @@ const Filters = () => {
           </select>
         </div>
         <div className="flex flex-col">
-          <label htmlFor="capacity"> Guests </label>
+          <label
+            className="mr-2 font-Gilda text-lg flex items-center"
+            htmlFor="capacity"
+          >
+            {" "}
+            Guests :{" "}
+          </label>
           <select
             name="capacity"
             id="capacity"
@@ -67,7 +79,13 @@ const Filters = () => {
           </select>
         </div>
         <div className="flex flex-col">
-          <label htmlFor="price"> Price ${price} </label>
+          <label
+            className="mr-2 font-Gilda text-lg flex items-center"
+            htmlFor="price"
+          >
+            {" "}
+            Price ${price === 0 ? minPrice : price}
+          </label>
           <input
             name="price"
             id="price"
@@ -75,7 +93,7 @@ const Filters = () => {
             value={price}
             onChange={filterChangeHandler}
             className="border w-full"
-            min={100}
+            min={minPrice}
             max={maxPrice}
             list="values"
             // required
@@ -86,7 +104,13 @@ const Filters = () => {
           </datalist>
         </div>
         <div className="flex items-center justify-center md:gap-1">
-          <label htmlFor="pets"> pets: </label>
+          <label
+            className=" font-Gilda text-lg flex items-center"
+            htmlFor="pets"
+          >
+            {" "}
+            pets:{" "}
+          </label>
           <input
             name="pets"
             id="pets"
@@ -97,7 +121,13 @@ const Filters = () => {
           />
         </div>
         <div className="flex items-center justify-center md:gap-1">
-          <label htmlFor="pets"> breakfas: </label>
+          <label
+            className=" font-Gilda text-lg flex items-center"
+            htmlFor="pets"
+          >
+            {" "}
+            breakfas:{" "}
+          </label>
           <input
             name="breakfast"
             id="breakfast"
