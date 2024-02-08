@@ -1,8 +1,11 @@
 import React from "react";
 import { FaRegTimesCircle } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { useRoomList } from "../context/RoomListProvider";
 
 const Modal = ({ isOpen, setIsOpen, children }) => {
   if (!isOpen) return null;
+  const { bookedRoom } = useRoomList();
   return (
     <div className="fixed inset-0 z-50  mb-20  ">
       <div
@@ -11,7 +14,12 @@ const Modal = ({ isOpen, setIsOpen, children }) => {
       ></div>
       <div className="  md:w-[500px] w-[380px]  absolute top-20 left-10 md:top-10 md:left-[500px]  bg-slate-800 p-4 rounded-2xl ">
         <div className="flex items-center  justify-between mb-4 pb-2 border-b-[1px] border-slate-600">
-          <h2 className="text-slate-200">Bookin Room</h2>
+          <div>
+            {bookedRoom.length>0?  <button className="bg-white text-black">
+              <Link to="reservation">Checkout</Link>
+            </button>:<h2 className="text-white font-medium">Booked Room</h2>}
+          
+          </div>
           <button className="border-none" onClick={() => setIsOpen(false)}>
             <FaRegTimesCircle className="w-5 h-5 border-none text-red-500" />
           </button>
