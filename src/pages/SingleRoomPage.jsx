@@ -24,13 +24,16 @@ const SingleRoomPage = () => {
           <Banner title={room[0]?.name}>
             <div className="flex w-full items-center justify-center gap-2 md:gap-4">
               <button className="py-2 font-medium border-2 bg-black hover:bg-white text-white hover:text-black transition ease-in duration-300 w-1/2 ">
-                <Link to="/rooms"> ROOMS</Link>
+                <Link className="" to="/rooms">
+                  {" "}
+                  ROOMS
+                </Link>
               </button>
               <button
                 onClick={() => getBookedRoom(room[0], slug)}
                 className="py-2 font-medium border-2 bg-black text-white hover:bg-white hover:text-black transition ease-in duration-300 w-1/2"
               >
-                BOOk ROOM
+                BOOK ROOM
                 {/* <Link to={`/rooms/reservation`}> BOOk ROOM</Link> */}
               </button>
             </div>
