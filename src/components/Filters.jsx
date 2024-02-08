@@ -3,51 +3,109 @@ import { useRoomList } from "../context/RoomListProvider";
 import Titles from "./Titles";
 
 const Filters = () => {
-  const {
-    roomList,
-    type,
-    capacity,
-    price,
-    breakfast,
-    pets,
-    filterChangedHandler,
+  const { roomList, roomOption, filterChangeHandler, filterRooms, maxPrice } =
+    useRoomList();
+  const { type, capacity, price, pets, breakfast } = roomOption;
 
-    filterdRoomList,
-  } = useRoomList();
   const types = roomList?.map((room) => room.type);
+
   let uniqueTypes = [...new Set(types)];
+
   uniqueTypes = ["all", ...uniqueTypes];
+
   const typeOptions = uniqueTypes.map((type, index) => (
     <option key={index} value={type}>
       {type}
     </option>
   ));
 
+  const peopleCapacity = roomList.map((room) => room.capacity);
+  let uniqueCapacity = [...new Set(peopleCapacity)];
+  const capacityOptions = uniqueCapacity.map((capacity, index) => (
+    <option key={index} value={capacity}>
+      {capacity}
+    </option>
+  ));
+
   useEffect(() => {
-    filterdRoomList();
-  }, [type]);
+    filterRooms(roomOption);
+  }, [roomOption]);
 
   return (
     <div className="flex flex-col ">
       <Titles title="Search Rooms" />
-      <form className="max-w-[1400px] py-10 px-4 m-auto gap-2 md:gap-4 flex flex-col md:flex-row">
-        <div className="flex ">
+      <form className="max-w-[1400px] py-10 px-4 m-auto gap-2 md:gap-4 flex flex-col md:flex-row font-Gilda">
+        <div className="flex flex-col ">
           <label
             className="mr-2 font-Gilda text-lg flex items-center"
             htmlFor="type "
           >
-            Filter By Room Type :
+            Type :
           </label>
           <select
             name="type"
             id="type"
             value={type}
-            onChange={filterChangedHandler}
+            onChange={filterChangeHandler}
             className="border"
             required
           >
             {typeOptions}
           </select>
+        </div>
+        <div className="flex flex-col">
+          <label htmlFor="capacity"> Guests </label>
+          <select
+            name="capacity"
+            id="capacity"
+            value={capacity}
+            onChange={filterChangeHandler}
+            className="border"
+            required
+          >
+            {capacityOptions}
+          </select>
+        </div>
+        <div className="flex flex-col">
+          <label htmlFor="price"> Price ${price} </label>
+          <input
+            name="price"
+            id="price"
+            type="range"
+            value={price}
+            onChange={filterChangeHandler}
+            className="border w-full"
+            min={100}
+            max={maxPrice}
+            list="values"
+            // required
+          />
+          <datalist id="values" className="text-black flex justify-between">
+            <option value={price} label={100}></option>
+            <option value={price} label={maxPrice}></option>
+          </datalist>
+        </div>
+        <div className="flex items-center justify-center md:gap-1">
+          <label htmlFor="pets"> pets: </label>
+          <input
+            name="pets"
+            id="pets"
+            type="checkbox"
+            value={pets}
+            onChange={filterChangeHandler}
+            className="border w-full"
+          />
+        </div>
+        <div className="flex items-center justify-center md:gap-1">
+          <label htmlFor="pets"> breakfas: </label>
+          <input
+            name="breakfast"
+            id="breakfast"
+            type="checkbox"
+            value={breakfast}
+            onChange={filterChangeHandler}
+            className="border w-full"
+          />
         </div>
       </form>
     </div>
@@ -55,3 +113,4 @@ const Filters = () => {
 };
 
 export default Filters;
+3;
