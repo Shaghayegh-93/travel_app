@@ -25,7 +25,10 @@ const Room = ({ item }) => {
           </button>
         </div>
 
-        <p className=" bg-gray-300 text-center p-2"> {item.name}</p>
+        <p className=" bg-gray-300 text-center p-2">
+          {" "}
+          {item.name.toUpperCase()}
+        </p>
       </div>
     </div>
   );
