@@ -20,6 +20,7 @@ const initialState = {
     pets: false,
   },
   maxPrice: 0,
+  minPrice: 0,
 
   bookedRoom: JSON.parse(localStorage.getItem("bookedRoom")) || [],
 };
@@ -76,7 +77,12 @@ function roomListReducer(state, action) {
         ...state,
         maxPrice: action.payload,
       };
-   
+    case "minPrice/loaded":
+      return {
+        ...state,
+        minPrice: action.payload,
+      };
+
     case "getBookedRoom/loaded":
       return {
         ...state,
@@ -121,6 +127,7 @@ const RoomListProvider = ({ children }) => {
       roomOption,
       maxPrice,
       bookedRoom,
+      minPrice,
     },
     dispatch,
   ] = useReducer(roomListReducer, initialState);
@@ -152,6 +159,8 @@ const RoomListProvider = ({ children }) => {
         });
         let maxPrice = Math.max(...rooms.map((room) => room.price));
         dispatch({ type: "maxPrice/loaded", payload: maxPrice });
+        let minPrice = Math.min(...rooms.map((room) => room.price));
+        dispatch({ type: "minPrice/loaded", payload: minPrice });
       } catch (error) {
         console.log(error);
       } finally {
@@ -254,6 +263,7 @@ const RoomListProvider = ({ children }) => {
         filterChangeHandler,
         filterRooms,
         maxPrice,
+        minPrice,
       }}
     >
       {children}
