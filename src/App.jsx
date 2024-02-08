@@ -21,6 +21,8 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="rooms" element={<RoomListPage />} />
             <Route path="rooms/:slug" element={<SingleRoomPage />} />
+            <Route path={"/reservation"} element={<ReservationPage />} />
+            <Route path={"rooms/reservation"} element={<ReservationPage />} />
             <Route
               path={"rooms/:slug/reservation"}
               element={<ReservationPage />}
