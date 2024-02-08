@@ -44,7 +44,9 @@ const SingleRoomPage = () => {
               {" "}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-20  ">
                 {room[0]?.images
-                  .map((image) => <img key={room[0]?.id} className="" src={image} />)
+                  .map((image, index) => (
+                    <img key={index} className="" src={image} />
+                  ))
                   .slice(1, 4)}
               </div>
               <div className="flex flex-col md:flex-row gap-10">
@@ -56,22 +58,22 @@ const SingleRoomPage = () => {
                   <h3 className="font-bold text">Details</h3>
                   <ul className="flex flex-col">
                     <li>
-                      <span className="font-bold ">Price:</span>$
+                      <span className="font-semibold ">Price:</span>$
                       {room[0]?.price}
                     </li>
                     <li>
-                      <span className="font-bold ">Size:</span>
+                      <span className="font-semibold ">Size:</span>
                       {room[0]?.size}
                     </li>
                     <li>
-                      <span className="font-bold ">Max Capacity:</span>
+                      <span className="font-semibold">Max Capacity:</span>
                       {room[0]?.capacity > 1
                         ? `${room[0]?.capacity} People`
                         : `${room[0]?.capacity} Person`}
                     </li>
                     <li>
                       {room[0]?.pets ? (
-                        <span className="font-bold ">Pets Allowed</span>
+                        <span className="font-semibold ">Pets Allowed</span>
                       ) : (
                         <span>Pets Not Allowed</span>
                       )}
@@ -87,7 +89,7 @@ const SingleRoomPage = () => {
               <div className="flex flex-col w-full">
                 <h3 className="font-bold text">Extras</h3>
                 <ul className="grid grid-cols-1 md:grid-cols-3 gap-y-2">
-                  {room[0]?.extras.map((extra,index) => (
+                  {room[0]?.extras.map((extra, index) => (
                     <li key={index}>-{extra}</li>
                   ))}
                 </ul>
