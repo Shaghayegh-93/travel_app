@@ -23,12 +23,17 @@ const SingleRoomPage = () => {
         <Hero backgroundImage={room[0]?.images && room[0].images[0]}>
           <Banner title={room[0]?.name}>
             <div className="flex w-full items-center justify-center gap-2 md:gap-4">
-              <button className="py-2 font-medium border-2 bg-black hover:bg-white text-white hover:text-black transition ease-in duration-300 w-1/2 ">
+              {/* <button className="py-2 font-medium border-2 bg-black hover:bg-white text-white hover:text-black transition ease-in duration-300 w-1/2 ">
                 <Link className="" to="/rooms">
                   {" "}
                   ROOMS
                 </Link>
-              </button>
+              </button> */}
+              <Link to="/rooms" className="block w-1/2">
+                <button className="py-2 font-medium border-2 bg-black hover:bg-white text-white hover:text-black transition ease-in duration-300 w-full">
+                  ROOMS
+                </button>
+              </Link>
               <button
                 onClick={() => getBookedRoom(room[0], slug)}
                 className="py-2 font-medium border-2 bg-black text-white hover:bg-white hover:text-black transition ease-in duration-300 w-1/2"
