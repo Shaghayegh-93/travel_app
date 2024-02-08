@@ -25,12 +25,12 @@ const Navbar = () => {
   return (
     <nav className="overflow-hidden w-screen flex justify-between items-center p-4 bg-gray-50 ">
       <div className="flex  items-center justify-between w-full">
-        <div className="text-gray-500 font-bold text-2xl z-20 flex items-center justify-center border-2 px-4 md:px-12 py-1 md:mr-8 cursor-pointer">
-          <NavLink to="/">
+        <NavLink to="/">
+          <div className="text-gray-500 font-bold text-2xl z-20 flex items-center justify-center border-2 px-4 md:px-12 py-1 md:mr-8 cursor-pointer">
             <span className="pr-2">BEST</span>
             <span className="  md:text-black">HOTEL</span>
-          </NavLink>
-        </div>
+          </div>
+        </NavLink>
 
         <HiMenuAlt3
           onClick={navClickHandler}
