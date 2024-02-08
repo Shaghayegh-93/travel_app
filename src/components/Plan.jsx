@@ -9,52 +9,50 @@ import Titles from "./Titles";
 const Plan = () => {
   return (
     <div className="flex-flex-col ">
-      <Titles title="The best places to visit"/>
-<div className="max-w-[1400px] py-16 px-4 m-auto grid lg:grid-cols-2 gap-4">
-      <div className="grid grid-cols-2 grid-rows-6 h-[80vh]">
-        <img
-          className="object-cover w-full h-full row-span-3 p-2"
-          src={plan1}
-          alt="beachImage"
-        />
-        <img
-          className="object-cover w-full h-full row-span-2 p-2 "
-          src={plan2}
-          alt="beachImage"
-        />
-        <img
-          className="object-cover w-full h-full row-span-2 p-2 "
-          src={plan3}
-          alt="beachImage"
-        />
-        <img
-          className="object-cover w-full h-full row-span-3 p-2 "
-          src={plan4}
-          alt="beachImage"
-        />
-        <img
-          className="object-cover w-full h-full row-span-2 p-2 "
-          src={plan5}
-          alt="beachImage"
-        />
-      </div>
-      <div className="flex h-full flex-col justify-center">
-        <h3 className="text-xl md:text-2xl font-bold">Plan Your Next Trip</h3>
-        <p className="text-2xl py-6">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia,
-          quae?
-        </p>
-        <p className="pb-6">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Beatae iusto
-          consequuntur eaque possimus praesentium, et ullam magni voluptates id
-          iste numquam aliquam quod atque porro laudantium consequatur provident
-          mollitia inventore.
-        </p>
-       
+      <Titles title="The Best Places To Visit" />
+      <div className="max-w-[1400px] py-16 px-4 m-auto grid lg:grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 grid-rows-6 h-[80vh]">
+          <img
+            className="object-cover w-full h-full row-span-3 p-2"
+            src={plan1}
+            alt="beachImage"
+          />
+          <img
+            className="object-cover w-full h-full row-span-2 p-2 "
+            src={plan2}
+            alt="beachImage"
+          />
+          <img
+            className="object-cover w-full h-full row-span-2 p-2 "
+            src={plan3}
+            alt="beachImage"
+          />
+          <img
+            className="object-cover w-full h-full row-span-3 p-2 "
+            src={plan4}
+            alt="beachImage"
+          />
+          <img
+            className="object-cover w-full h-full row-span-2 p-2 "
+            src={plan5}
+            alt="beachImage"
+          />
+        </div>
+        <div className="flex h-full flex-col justify-center">
+          <h3 className="text-xl md:text-2xl font-bold">Plan Your Next Trip</h3>
+          <p className="text-2xl py-6">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia,
+            quae?
+          </p>
+          <p className="pb-6">
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Beatae
+            iusto consequuntur eaque possimus praesentium, et ullam magni
+            voluptates id iste numquam aliquam quod atque porro laudantium
+            consequatur provident mollitia inventore.
+          </p>
+        </div>
       </div>
     </div>
-    </div>
-    
   );
 };
 
