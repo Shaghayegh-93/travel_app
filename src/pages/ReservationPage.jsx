@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Layout from "../components/Layout";
 import Titles from "../components/Titles";
 import { useUserList } from "../context/UserListProvider";
@@ -11,13 +11,20 @@ import defaultImage from "../assets/images/room-1.jpeg";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useFormik } from "formik";
-import { object, string, number, date } from "yup";
+import { object, string, number, date, ref } from "yup";
 import valid from "card-validator";
 
 // import BasicDateRangePicker from "../components/DateRange";
+
 const validationSchema = object({
-  name: string().required("Name is required").min(2, "Your Name its Not Valid"),
-  lastName: string().required("lastName is required"),
+  name: string()
+    .required("Name is required")
+    .matches(/^[a-zA-Z\s]*$/, "Invalid characters in name")
+    .min(2, "Name should be at least 2 characters"),
+  lastName: string()
+    .required("Last Name is required")
+    .matches(/^[a-zA-Z\s]*$/, "Invalid characters in last name")
+    .min(2, "Last Name should be at least 2 characters"),
 
   phoneNumber: string()
     .required("phoneNumber is required")
@@ -26,11 +33,20 @@ const validationSchema = object({
   guest: number().required("Number of guest is required").positive().integer(),
 
   roomNumber: number().required().positive().integer(),
-  cardNumber: string().test(
-    "test-number",
-    "Credit Card number is invalid",
-    (value) => valid.number(value).isValid
-  ),
+  checkIn: date()
+    .required("Check-in date is required")
+    .min(new Date(), "Check-in date must be today or later"),
+
+  checkOut: date()
+    .required("Check-out date is required")
+    .min(
+      ref("checkIn"),
+      "Check-out date must be equal to or later than check-in date"
+    ),
+
+  cardNumber: string()
+    .matches(/^[0-9]{16}$/, "Invalid Credit Card Number")
+    .required("Credit Card Number is required"),
 
   expiryDate: string()
     .typeError("Not a valid expiration date. Example: MM/YY")
@@ -40,12 +56,12 @@ const validationSchema = object({
 
   email: string().email("Invalid email format").required("Email is required"),
   cvv: string()
-    .min(3, "Incorrect format")
-    .max(4, "Incorrect format")
-    .required("Cvv is required"),
-  createdOn: date().default(() => new Date()),
+    .matches(/^[0-9]{3,4}$/, "Invalid CVV")
+    .required("CVV is required"),
 });
+
 const ReservationPage = () => {
+  const ref = useRef();
   const [date, setDate] = useState([
     { startDate: new Date(), endDate: new Date(), key: "selection" },
   ]);
@@ -75,8 +91,6 @@ const ReservationPage = () => {
       cardNumber,
       expiryDate,
       cvv,
-      checkIn,
-      checkOut,
     } = values;
     const userInfo = {
       name,
@@ -88,10 +102,10 @@ const ReservationPage = () => {
       cardNumber,
       expiryDate,
       cvv,
-      checkIn,
-      checkOut,
     };
+
     dispatch({ type: "formSubmitHandler", payload: userInfo });
+    toast.success("Your room has been successfully booked !");
   };
   const formik = useFormik({
     initialValues: {
@@ -104,11 +118,13 @@ const ReservationPage = () => {
       cardNumber: "",
       expiryDate: "",
       cvv: "",
+      // checkInOut: date[0].startDate,
       checkIn: date[0].startDate,
       checkOut: date[0].endDate,
     },
     onSubmit,
     validationSchema,
+    validateOnMount: true,
   });
   console.log(formik);
 
@@ -116,8 +132,6 @@ const ReservationPage = () => {
 
   // const { dispatch } = useUserList();
   const { capacity, room } = useRoomList();
-
- 
 
   const { slug } = useRoomList();
   return (
@@ -148,13 +162,11 @@ const ReservationPage = () => {
                     Name:
                   </label>
                   <input
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
                     className="border py-2 px-4"
                     type="text"
+                    {...formik.getFieldProps("name")}
                     placeholder="Enter Name"
                     name="name"
-                    value={formik.values.name}
                   />
                   {formik.errors.name && formik.touched.name && (
                     <div className="text-red-600 my-1">
@@ -170,73 +182,56 @@ const ReservationPage = () => {
                     Last Name:
                   </label>
                   <input
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
                     className="border py-2 px-4"
                     type="text"
+                    {...formik.getFieldProps("lastName")}
                     placeholder="Enter Last Name"
                     name="lastName"
-                    value={formik.values.lastName}
                   />
+                  {formik.errors.lastName && formik.touched.lastName && (
+                    <div className="text-red-600 my-1">
+                      {formik.errors.lastName}
+                    </div>
+                  )}
                 </div>
-                {formik.errors.lastName && formik.touched.lastName && (
-                  <div className="text-red-600 my-1">
-                    {formik.errors.lastName}
-                  </div>
-                )}
               </div>
 
-              <div className="flex  flex-col md:flex-row gap-2">
-                <div className="flex flex-col relative w-full">
+              <div className="flex  flex-col md:flex-row gap-2 w-full">
+                {/* Remove DateRange component */}
+
+                <div className="flex flex-col w-1/2 ">
                   <label
                     className="text-black font-bold text-base mb-2"
                     htmlFor="checkIn"
-                    onClick={() => setIsDateOpen(!isDateOpen)}
                   >
-                    Check In/Out:
+                    Check In:
                   </label>
-                  <div className="py-2 px-2  border">
-                    {`${format(date[0].startDate, "dd/MM/yyyy")} to ${format(
-                      date[0].endDate,
-                      "dd/MM/yyyy"
-                    )} `}
-                  </div>
-                  {isDateOpen && (
-                    <DateRange
-                      ranges={date}
-                      onChange={(item) => setDate([item.selection])}
-                      minDate={new Date()}
-                      moveRangeOnFirstSelection={true}
-                      className="absolute top-12 -left-1 z-20"
-                      // value={formik.values.date}
-                    />
-                  )}
-                </div>
-                {/* {formik.errors.name && (
-                  <div className="text-red-600 my-1">{formik.errors.name}</div>
-                )} */}
-                <div className="w-full flex flex-col">
-                  <label
-                    className="text-black font-bold text-base mb-2"
-                    htmlFor="phoneNumber"
-                  >
-                    Phone Number
-                  </label>
+
                   <input
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
                     className="border py-2 px-4"
-                    type="text"
-                    placeholder="Enter  Phone Number"
-                    name="phoneNumber"
-                    value={formik.values.phoneNumber}
+                    type="date"
+                    {...formik.getFieldProps("checkIn")}
+                    name="checkIn"
+                    min={format(new Date(), "yyyy-MM-dd")}
                   />
                 </div>
-                {formik.errors.phoneNumber && formik.touched.phoneNumber && (
-                  <div className="text-red-600 my-1">
-                    {formik.errors.phoneNumber}
-                  </div>
-                )}
+
+                <div className="flex flex-col w-1/2  ">
+                  <label
+                    className="text-black font-bold text-base mb-2"
+                    htmlFor="checkOut"
+                  >
+                    Check Out:
+                  </label>
+
+                  <input
+                    className="border py-2 px-4"
+                    type="date"
+                    {...formik.getFieldProps("checkOut")}
+                    name="checkOut"
+                    min={format(new Date(), "yyyy-MM-dd")}
+                  />
+                </div>
               </div>
 
               <div className="flex flex-col md:flex-row gap-2">
@@ -248,19 +243,20 @@ const ReservationPage = () => {
                     Email
                   </label>
                   <input
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
                     className="border py-2 px-4"
                     type="email"
+                    {...formik.getFieldProps("email")}
                     id=""
                     placeholder="Enter Email"
                     name="email"
-                    value={formik.values.email}
                   />
+                  {formik.errors.email && formik.touched.email && (
+                    <div className="text-red-600 my-1">
+                      {formik.errors.email}
+                    </div>
+                  )}
                 </div>
-                {formik.errors.email && formik.touched.email && (
-                  <div className="text-red-600 my-1">{formik.errors.email}</div>
-                )}
+
                 <div className="w-full flex flex-col">
                   <label
                     className="text-black font-bold text-base mb-2"
@@ -269,19 +265,37 @@ const ReservationPage = () => {
                     Guest:
                   </label>
                   <input
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
                     className="border py-2 px-4"
                     type="number"
+                    {...formik.getFieldProps("guest")}
                     placeholder="1"
                     min={1}
                     id=""
                     name="guest"
-                    value={formik.values.guest}
                   />
                 </div>
                 {formik.errors.guest && formik.touched.guest && (
                   <div className="text-red-600 my-1">{formik.errors.guest}</div>
+                )}
+              </div>
+              <div className=" flex flex-col">
+                <label
+                  className="text-black font-bold text-base mb-2"
+                  htmlFor="phoneNumber"
+                >
+                  Phone Number
+                </label>
+                <input
+                  className="border py-2 px-4"
+                  {...formik.getFieldProps("phoneNumber")}
+                  type="text"
+                  placeholder="Enter Phone Number"
+                  name="phoneNumber"
+                />
+                {formik.errors.phoneNumber && formik.touched.phoneNumber && (
+                  <div className="text-red-600  ">
+                    {formik.errors.phoneNumber}
+                  </div>
                 )}
               </div>
 
@@ -290,16 +304,14 @@ const ReservationPage = () => {
                   className="text-black font-bold text-base mb-2"
                   htmlFor="cardNumber"
                 >
-                  Credit Card Number:
+                  Card Number:
                 </label>
                 <input
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
                   className="border py-2 px-4"
                   type="text"
+                  {...formik.getFieldProps("cardNumber")}
                   placeholder="Enter Card Number"
                   name="cardNumber"
-                  value={formik.values.cardNumber}
                 />
               </div>
               {formik.errors.cardNumber && formik.touched.cardNumber && (
@@ -315,13 +327,11 @@ const ReservationPage = () => {
                   Expiry Date:
                 </label>
                 <input
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
                   className="border py-2 px-4"
                   type="text"
+                  {...formik.getFieldProps("expiryDate")}
                   placeholder="MM/YY"
                   name="expiryDate"
-                  value={formik.values.expiryDate}
                 />
               </div>
               {formik.errors.expiryDate && formik.touched.expiryDate && (
@@ -337,29 +347,30 @@ const ReservationPage = () => {
                   CVV:
                 </label>
                 <input
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
                   className="border py-2 px-4"
                   type="text"
+                  {...formik.getFieldProps("cvv")}
                   placeholder="123"
                   name="cvv"
-                  value={formik.values.cvv}
                 />
               </div>
-              {formik.errors.ccv && formik.touched.cvv && (
-                <div className="text-red-600 my-1">{formik.errors.ccv}</div>
+              {formik.errors.cvv && formik.touched.cvv && (
+                <div className="text-red-600 my-1">{formik.errors.cvv}</div>
               )}
               <div className="flex  flex-row gap-2 w-full cursor-pointer ">
                 <button
                   className="py-2 px-4 w-1/2 bg-black/80 text-white"
                   type="submit"
+                  disabled={!formik.isValid}
                 >
                   Submit
                 </button>
-                <button className="py-2 px-4 w-1/2">
-                  {/* <Link to={`/rooms/${slug}`}> CANCEL</Link> */}
-                  <Link to="/rooms"> CANCEL</Link>
-                </button>
+                <Link to="/rooms" className="w-1/2">
+                  <button className="py-2 px-4 w-full">
+                    Cancel
+                    {/* <Link to={`/rooms/${slug}`}> CANCEL</Link> */}
+                  </button>
+                </Link>
               </div>
             </form>
           </div>
